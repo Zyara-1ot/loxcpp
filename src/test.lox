@@ -1,0 +1,6 @@
+// test scanner
+var x = 123.45;
+print "hello world";
+if (x >= 10) {
+  x = x + 1;
+}

@@ -1,0 +1,5 @@
+scanner_test
+*.o
+*.out
+build/
+
