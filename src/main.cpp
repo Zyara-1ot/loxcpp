@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include "Scanner.h"
+#include "scanner.h"
 #include "Error.h"
 
 void run(const std::string& source){

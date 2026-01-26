@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "Scanner.h"
+#include "scanner.h"
 #include <unordered_map>
 #include <iostream>
 #include "Error.h"
