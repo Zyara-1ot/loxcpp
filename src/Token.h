@@ -22,15 +22,15 @@ enum class TokenType{
 };
 
 
-using Literal = std::variant<std::monostate, double, std::string, bool>;
+using Value = std::variant<std::monostate, double, std::string, bool>;
 
 struct Token{
     TokenType type;
     std::string lexeme;
-    Literal literal;
+    Value literal;
     int line;
 
-    Token(TokenType type, std::string lexeme, Literal literal, int line)
+    Token(TokenType type, std::string lexeme, Value literal, int line)
         : type(type), lexeme(std::move(lexeme)),
         literal(std::move(literal)), line(line){}
 

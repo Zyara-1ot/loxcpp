@@ -28,7 +28,7 @@ private:
     void identifier();
 
     void addToken(TokenType type);
-    void addToken(TokenType type, Literal literal);
+    void addToken(TokenType type, Value literal);
 
     static const std::unordered_map<std::string, TokenType> keywords;
 };
