@@ -5,24 +5,28 @@
 #include <string>
 #include "scanner.h"
 #include "Error.h"
+#include "parser.h"
+#include "AstPrinter.h"
 
 void run(const std::string& source){
     Scanner scanner(source);
-    std::vector<Token> tokens = scanner.scanTokens();
+    auto tokens = scanner.scanTokens();
 
-    for(const Token& token : tokens){
-        std::cout << token.toString() << "\n";
-    }
+    Parser parser(tokens);
+    auto expr = parser.parse();
+
+    if (!expr) return;
+
+    AstPrinter printer;
+    std::cout << printer.print(expr) << std::endl;
+
 
 }
-
-
 
 void report(int line, const std::string& where, const std::string& message){
-    std::cerr << "[Line" << line << "[] Error" << where << ":" << message << "/n";
+    std::cerr << "[Line" << line << "[S] Error" << where << ":" << message << "/n";
     hadError = true;
 }
-
 
 void runFile(const std::string& path){
     std::ifstream file(path);
@@ -33,9 +37,6 @@ void runFile(const std::string& path){
     if(hadError){
         exit(65);
     }
-    
-    
-
 }
 
 void runPrompt(){
@@ -45,11 +46,8 @@ void runPrompt(){
         if(!std::getline(std::cin, line)) break;
         run(line);
         hadError = false;
-
     }
-
 }
-
 
 int main(int argc, char* argv[]){
     if(argc > 2){
@@ -60,7 +58,4 @@ int main(int argc, char* argv[]){
     } else{
         runPrompt();
     }
-
-
-
 }

@@ -38,18 +38,18 @@ struct Unary : Expr {
     }
 };
 
-struct Literal : Expr {
-    std::variant<double, std::string, bool, std::nullptr_t> value;
+using Value = std::variant<std::monostate, double, std::string, bool>;
 
-    Literal(double v) : value(v) {}
-    Literal(const std::string& v) : value(v) {}
-    Literal(bool v) : value(v) {}
-    Literal(std::nullptr_t) : value(nullptr) {}
+struct Literal : Expr {
+    Value value;
+
+    Literal(Value v) : value(v) {}
 
     std::string accept(ExprVisitor& visitor) const override {
         return visitor.visitLiteral(*this);
     }
 };
+
 
 struct Grouping : Expr {
     std::shared_ptr<Expr> expression;

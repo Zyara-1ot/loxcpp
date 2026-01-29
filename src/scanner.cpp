@@ -7,22 +7,22 @@
 
 
 const std::unordered_map<std::string, TokenType> Scanner::keywords = {
-    {"and",    TokenType::AND},
-    {"class",  TokenType::CLASS},
-    {"else",   TokenType::ELSE},
-    {"false",  TokenType::FALSE},
-    {"for",    TokenType::FOR},
-    {"fun",    TokenType::FUN},
-    {"if",     TokenType::IF},
-    {"nil",    TokenType::NIL},
-    {"or",     TokenType::OR},
-    {"print",  TokenType::PRINT},
-    {"return", TokenType::RETURN},
-    {"super",  TokenType::SUPER},
-    {"this",   TokenType::THIS},
-    {"true",   TokenType::TRUE},
-    {"var",    TokenType::VAR},
-    {"while",  TokenType::WHILE}
+    {"and",TokenType::AND},
+    {"class", TokenType::CLASS},
+    {"else",  TokenType::ELSE},
+    {"false",TokenType::FALSE},
+    {"for",  TokenType::FOR},
+    {"fun", TokenType::FUN},
+    {"if", TokenType::IF},
+    {"nil", TokenType::NIL},
+    {"or",  TokenType::OR},
+    {"print", TokenType::PRINT},
+    {"return",TokenType::RETURN},
+    {"super", TokenType::SUPER},
+    {"this", TokenType::THIS},
+    {"true", TokenType::TRUE},
+    {"var", TokenType::VAR},
+    {"while",TokenType::WHILE}
 };
 
 Scanner::Scanner(const std::string& source)
@@ -78,7 +78,6 @@ void Scanner::scanToken(){
 
         case '/':
             if (match('/')) {
-    
                 while (peek() != '\n' && !isAtEnd()) advance();
             } else {
                 addToken(TokenType::SLASH);
@@ -99,8 +98,6 @@ void Scanner::scanToken(){
         case '"':
             string();
             break;
-
-
 
         default:
         if (std::isalpha(c) || c == '_') {
@@ -140,17 +137,12 @@ void Scanner::string() {
         if (peek() == '\n') line++;
         advance();
     }
-
-
     if (isAtEnd()) {
         error(line, "Unterminated string.");
         return;
     }
-
     advance();
-
     std::string value = source.substr(start + 1, current - start - 2);
-
     addToken(TokenType::STRING, value);
 }
 
@@ -158,13 +150,10 @@ char Scanner::peekNext() const {
     if (current + 1 >= source.length()) return '\0';
     return source[current + 1];
 }
-
-
 void Scanner::number() {
     while (std::isdigit(peek())) {
         advance();
     }
-
     if (peek() == '.' && std::isdigit(peekNext())) {
         advance();
 
@@ -172,11 +161,9 @@ void Scanner::number() {
             advance();
         }
     }
-
     double value = std::stod(
         source.substr(start, current - start)
     );
-
     addToken(TokenType::NUMBER, value);
 }
 
@@ -184,7 +171,6 @@ void Scanner::identifier() {
     while (std::isalnum(peek()) || peek() == '_') {
         advance();
     }
-
     std::string text = source.substr(start, current - start);
 
     auto it = keywords.find(text);
