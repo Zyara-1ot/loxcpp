@@ -1,25 +1,8 @@
 #pragma once
 #include <string>
 #include <variant>
-
+#include "TokenType.h"
 #include <iostream>
-
-enum class TokenType{
-    LEFT_PAREN, RIGHT_PAREN,
-    LEFT_BRACE, RIGHT_BRACE,
-    COMMA, DOT, MINUS, PLUS,
-    SEMICOLON, SLASH, STAR,
-    BANG, BANG_EQUAL, 
-    EQUAL, EQUAL_EQUAL,
-    GREATER, GREATER_EQUAL,
-    LESS, LESS_EQUAL,
-    IDENTIFIER, STRING, NUMBER,
-    AND, CLASS, ELSE, FALSE, 
-    FUN, FOR, IF, NIL , OR,  
-    PRINT, RETURN, VAR, WHILE,
-    SUPER, THIS, TRUE, 
-    EOF_TOKEN
-};
 
 
 using Value = std::variant<std::monostate, double, std::string, bool>;

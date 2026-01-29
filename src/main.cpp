@@ -7,6 +7,7 @@
 #include "Error.h"
 #include "parser.h"
 #include "AstPrinter.h"
+#include "Interpreter.h"
 
 void run(const std::string& source){
     Scanner scanner(source);

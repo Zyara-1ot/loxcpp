@@ -2,6 +2,10 @@
 
 Parser::Parser(const std::vector<Token>& tokens) : tokens(tokens) {}
 
+std::shared_ptr<Expr> Parser::expression() {
+    return equality();
+}
+
 std::shared_ptr<Expr> Parser::equality(){
     auto expr = comparison();
     while(match({TokenType::BANG_EQUAL, TokenType::EQUAL_EQUAL})){
