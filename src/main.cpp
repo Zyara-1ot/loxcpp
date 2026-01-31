@@ -6,8 +6,9 @@
 #include "scanner.h"
 #include "Error.h"
 #include "parser.h"
-#include "AstPrinter.h"
 #include "Interpreter.h"
+
+Interpreter interpreter;
 
 void run(const std::string& source){
     Scanner scanner(source);
@@ -16,19 +17,13 @@ void run(const std::string& source){
     Parser parser(tokens);
     auto expr = parser.parse();
 
-    if (!expr) return;
-
-    AstPrinter printer;
-    std::cout << printer.print(expr) << std::endl;
-
-
+    if (hadError) return;
+interpreter.interpret(expr);
 }
-
 void report(int line, const std::string& where, const std::string& message){
     std::cerr << "[Line" << line << "[S] Error" << where << ":" << message << "/n";
     hadError = true;
 }
-
 void runFile(const std::string& path){
     std::ifstream file(path);
     std::stringstream buffer;
@@ -39,7 +34,6 @@ void runFile(const std::string& path){
         exit(65);
     }
 }
-
 void runPrompt(){
     std::string line;
     while(true){
@@ -49,7 +43,6 @@ void runPrompt(){
         hadError = false;
     }
 }
-
 int main(int argc, char* argv[]){
     if(argc > 2){
         std::cout << "usage: loxcpp [script]\n";
