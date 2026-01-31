@@ -5,7 +5,6 @@ Parser::Parser(const std::vector<Token>& tokens) : tokens(tokens) {}
 std::shared_ptr<Expr> Parser::expression() {
     return equality();
 }
-
 std::shared_ptr<Expr> Parser::equality(){
     auto expr = comparison();
     while(match({TokenType::BANG_EQUAL, TokenType::EQUAL_EQUAL})){
@@ -15,7 +14,6 @@ std::shared_ptr<Expr> Parser::equality(){
     }
     return expr;
 }
-
 bool Parser::match(std::initializer_list<TokenType> types) {
     for (TokenType type : types) {
         if (check(type)) {
@@ -25,30 +23,23 @@ bool Parser::match(std::initializer_list<TokenType> types) {
     }
     return false;
 }
-
-
 bool Parser::check(TokenType type) const{
     if(isAtEnd()) return false;
     return peek().type == type;
 }
-
 Token Parser::advance(){
     if(!isAtEnd()) current++;
     return previous();
 }
-
 Token Parser::peek() const{
     return tokens[current];
 }
-
 Token Parser::previous() const{
     return tokens[current -1];
 }
-
 bool Parser::isAtEnd() const {
     return peek().type == TokenType::EOF_TOKEN;
 }
-
 std::shared_ptr<Expr> Parser::comparison(){
     auto expr =  term();
 
@@ -62,7 +53,6 @@ std::shared_ptr<Expr> Parser::comparison(){
 }
 return expr;
 }
-
 std::shared_ptr<Expr> Parser::term(){
     auto expr = factor();
 
@@ -72,9 +62,7 @@ std::shared_ptr<Expr> Parser::term(){
         expr = std::make_shared<Binary>(expr, op, right);
     }
     return expr;
-
 }
-
 std::shared_ptr<Expr> Parser::factor(){
     auto expr = unary();
 
@@ -85,7 +73,6 @@ std::shared_ptr<Expr> Parser::factor(){
     }
     return expr;
 }
-
 std::shared_ptr<Expr> Parser::unary(){
     if(match({TokenType::BANG, TokenType::MINUS})){
         Token op = previous();
@@ -94,7 +81,6 @@ std::shared_ptr<Expr> Parser::unary(){
     }
     return primary();
 }
-
 std::shared_ptr<Expr> Parser::primary(){
     if(match({TokenType::FALSE})) return std::make_shared<Literal>(false);
     if(match({TokenType::TRUE})) return std::make_shared<Literal>(true);
@@ -109,7 +95,6 @@ std::shared_ptr<Expr> Parser::primary(){
     }
     throw std::runtime_error("Expected expression.");
 }
-
 Token Parser::consume(TokenType type, const std::string& message) {
     if (check(type)) return advance();
     throw error(peek(), message);
