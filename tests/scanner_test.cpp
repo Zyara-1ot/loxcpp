@@ -23,7 +23,6 @@ int main() {
         TokenType::RIGHT_PAREN,
         TokenType::EOF_TOKEN
     });
-
     expectTokenTypes("var x = 10;", {
         TokenType::VAR,
         TokenType::IDENTIFIER,
@@ -32,6 +31,5 @@ int main() {
         TokenType::SEMICOLON,
         TokenType::EOF_TOKEN
     });
-
     std::cout << "All scanner tests passed \n";
 }

@@ -21,12 +21,10 @@ private:
     char peek() const;
     char peekNext() const;
     bool isAtEnd() const;
-
     void scanToken();
     void string();
     void number();
     void identifier();
-
     void addToken(TokenType type);
     void addToken(TokenType type, Value literal);
 

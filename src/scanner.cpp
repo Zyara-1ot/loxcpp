@@ -36,11 +36,9 @@ std::vector<Token> Scanner::scanTokens() {
     tokens.emplace_back(TokenType::EOF_TOKEN, "", std::monostate{}, line);
     return tokens;
 }
-
 bool Scanner::match(char expected) {
     if (isAtEnd()) return false;
     if (source[current] != expected) return false;
-
     current++;
     return true;
 }
@@ -116,7 +114,6 @@ char Scanner::advance(){
     current++;
     return source[current - 1];
 }
-
 
 void Scanner::addToken(TokenType type){
     addToken(type, std::monostate{});

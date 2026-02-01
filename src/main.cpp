@@ -7,32 +7,33 @@
 #include "Error.h"
 #include "parser.h"
 #include "Interpreter.h"
+#include "stmt.h"
 
 Interpreter interpreter;
 
-void run(const std::string& source){
+void run(const std::string& source) {
     Scanner scanner(source);
     auto tokens = scanner.scanTokens();
 
     Parser parser(tokens);
-    auto expr = parser.parse();
+    auto statements = parser.parse(); 
 
-    if (hadError) return;
-interpreter.interpret(expr);
+    interpreter.interpret(statements); 
 }
 void report(int line, const std::string& where, const std::string& message){
     std::cerr << "[Line" << line << "[S] Error" << where << ":" << message << "/n";
     hadError = true;
 }
-void runFile(const std::string& path){
+void runFile(const std::string& path) {
     std::ifstream file(path);
+    if (!file.is_open()) {
+        std::cerr << "Could not open file: " << path << std::endl;
+        return;
+    }
     std::stringstream buffer;
     buffer << file.rdbuf();
+    buffer << "\n";   
     run(buffer.str());
-
-    if(hadError){
-        exit(65);
-    }
 }
 void runPrompt(){
     std::string line;
@@ -43,13 +44,16 @@ void runPrompt(){
         hadError = false;
     }
 }
-int main(int argc, char* argv[]){
-    if(argc > 2){
-        std::cout << "usage: loxcpp [script]\n";
-        return 64;
-    } else if (argc == 2){
-        runFile(argv[1]);
-    } else{
+int main(int argc, char* argv[]) {
+    if (argc > 2) {
+        std::cerr << "Usage: lox [script]\n";
+        return 1;
+    }
+    if (argc == 2) {
+        runFile(argv[1]);  
+    } else {
         runPrompt();
     }
+
+    return 0;
 }
