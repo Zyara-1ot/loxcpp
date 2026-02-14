@@ -21,7 +21,7 @@ It currently supports:
 
 Built following the excellent [Crafting Interpreters](https://craftinginterpreters.com/) book, but implemented in C++ instead of Java .
 
-## 🚀 Why I Built This
+##  Why I Built This
 
 I wanted to understand how programming languages actually work , not just use them, but understand them from the ground up. This project taught me:
 
@@ -31,7 +31,7 @@ I wanted to understand how programming languages actually work , not just use th
 - The intricacies of scope, closures, and environment chaining
 - Memory is managed using C++ smart pointers (`std::shared_ptr`) leveraging RAII and reference counting for deterministic object lifetime management.
 
-## 🎯 Features
+## Features
 
 - **Expressions** - Arithmetic, comparison, logical operations
 - **Variables** - Declaration, assignment, scoping
